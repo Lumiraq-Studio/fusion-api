@@ -1,0 +1,37 @@
+services:
+  navoda-api-dev:
+    container_name: navoda-api-dev-${NODE_ENV}
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${PORT}:3000"
+    environment:
+      NODE_ENV: ${NODE_ENV}
+      DB_USER: ${DB_USER}
+      DB_PWD: ${DB_PWD}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DATABASE: ${DATABASE}
+    profiles:
+      - development
+
+
+  sl-erp-api-prod:
+    container_name: navoda-api-prod-${NODE_ENV}
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${PORT}:3000"
+    environment:
+      NODE_ENV: ${NODE_ENV}
+      DB_USER: ${DB_USER}
+      DB_PWD: ${DB_PWD}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DATABASE: ${DATABASE}
+    profiles:
+      - production
