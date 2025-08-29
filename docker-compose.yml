@@ -1,6 +1,6 @@
 services:
   navoda-api-dev:
-    container_name: navoda-api-dev
+    container_name: dev
     restart: always
     build:
       context: .
@@ -19,7 +19,7 @@ services:
 
 
   navoda-api-prod:
-    container_name: navoda-api-prod
+    container_name: prod
     restart: always
     build:
       context: .
