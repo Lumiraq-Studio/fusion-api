@@ -29,6 +29,7 @@ import {SysUserModule} from "./modules/sys-user/sys-user.module";
 import {ReportModule} from "./modules/report/report.module";
 import {ExpensesModule} from "./modules/expenses/expenses.module";
 import {MaterialsModule} from "./modules/materials/materials.module";
+import {StatisticsModule} from "./modules/statistics/statistics.module";
 
 
 @Module({
@@ -61,7 +62,8 @@ import {MaterialsModule} from "./modules/materials/materials.module";
         ReportModule,
         ExpensesModule,
         MaterialsModule,
-
+        StatisticsModule   
+    
 
     ],
     controllers: [AppController],

@@ -18,6 +18,8 @@ import {SysUserModule} from "./src/modules/sys-user/sys-user.module";
 import {ReportModule} from "./src/modules/report/report.module";
 import {ExpensesModule} from "./src/modules/expenses/expenses.module";
 import {MaterialsService} from "./src/modules/materials/materials.service";
+import {StatisticsService} from "./src/modules/statistics/statistics.service";
+import {StatisticsModule} from "./src/modules/statistics/statistics.module";
 
 
 export const routes: Routes = [
@@ -40,4 +42,5 @@ export const routes: Routes = [
     { path: 'reports', module: ReportModule },
     { path: 'expenses', module: ExpensesModule },
     { path: 'materials', module: MaterialsService },
+    { path: 'statistics', module: StatisticsModule },
 ];
