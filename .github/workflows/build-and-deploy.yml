@@ -1,0 +1,50 @@
+name: Fusion API CI/CD
+
+on:
+  pull_request:
+    branches:
+      - "**"
+  push:
+    branches:
+      - release/dev
+      - main
+
+jobs:
+  # 🔹 PR Build
+  build-pr:
+    if: github.event_name == 'pull_request'
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image for PR
+        run: |
+          docker build -f Dockerfile -t ${{ github.repository }}:${{ github.event.pull_request.number }} .
+
+      - name: Cleanup Docker image
+        run: |
+          docker rmi ${{ github.repository }}:${{ github.event.pull_request.number }}
+
+  # 🔹 Deploy release/dev
+  deploy-dev:
+    if: github.ref == 'refs/heads/release/dev'
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy Development API with Docker Compose
+        run: |
+          docker compose down
+          docker compose --profile development up --build -d
+
+  # 🔹 Deploy main (production)
+  deploy-prod:
+    if: github.ref == 'refs/heads/main'
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy Production API with Docker Compose
+        run: |
+          docker compose down
+          docker compose --profile production up --build -d
