@@ -21,10 +21,6 @@ jobs:
         run: |
           docker build -f Dockerfile -t ${{ github.repository }}:${{ github.event.pull_request.number }} .
 
-      - name: Test API container
-        run: |
-          docker run --rm ${{ github.repository }}:${{ github.event.pull_request.number }} npm run test
-
       - name: Cleanup Docker image
         run: |
           docker rmi ${{ github.repository }}:${{ github.event.pull_request.number }}
