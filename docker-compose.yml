@@ -1,0 +1,36 @@
+services:
+  navoda-api-dev:
+    container_name: dev
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5665:3000"
+    environment:
+      NODE_ENV: ${NODE_ENV}
+      DB_USER: ${DB_USER}
+      DB_PWD: ${DB_PWD}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DATABASE: ${DATABASE}
+    profiles:
+      - development
+
+
+  navoda-api-prod:
+    container_name: prod
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4224:3000"
+    environment:
+      DB_USER: ${DB_USER}
+      DB_PWD: ${DB_PWD}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DATABASE: ${DATABASE}
+    profiles:
+      - production
