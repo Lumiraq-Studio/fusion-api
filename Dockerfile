@@ -1,34 +1,25 @@
-# ---------- BUILD STAGE ----------
-FROM node:lts-slim AS builder
+# Use official Node.js image as the base
+FROM node:lts
 
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Copy package.json and package-lock.json (if exists)
 COPY package*.json ./
 
-# Install all dependencies including dev
-RUN npm ci
+# Install dependencies
+RUN npm install
 
-# Copy source code
+# Copy the rest of the application source code
+# COPY /dist/. .
 COPY . .
 
-# Build the NestJS application
+# Build the application
+# To be removed when it's built in the CI/CD pipeline
 RUN npm run build
 
-# ---------- PRODUCTION STAGE ----------
-FROM node:lts-slim AS production
-
-WORKDIR /app
-
-# Copy only production dependencies
-COPY package*.json ./
-RUN npm ci --omit=dev
-
-# Copy built application from builder
-COPY --from=builder /app/dist ./dist
-
-# Expose port
+# Expose the port your NestJS application listens on (e.g., 3000)
 EXPOSE 3000
 
-# Start the application
-CMD ["node", "dist/main.js"]
+# Start the NestJS application using the compiled output
+CMD ["npm", "run", "start:prod"]
